@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+data/cache/*
+data/*.sqlite*
+data/logs/
+data/owner/
+outputs/
+work/
+.DS_Store
+.idea/

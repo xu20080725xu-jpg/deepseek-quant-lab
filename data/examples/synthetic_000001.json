@@ -1,0 +1,12 @@
+{
+  "symbol": "000001",
+  "source": "NumPy seed=42 / synthetic generator v1",
+  "kind": "synthetic",
+  "label": "人工合成测试数据（非真实行情）",
+  "sample": true,
+  "adjust": "none",
+  "volume_unit": "shares",
+  "fetched_at": "not_applicable",
+  "last_bar": "2025-05-19",
+  "calendar": "工作日序列，包含中国节假日，仅用于测试"
+}
