@@ -2,7 +2,7 @@
 from pathlib import Path
 import pytest
 from streamlit.testing.v1 import AppTest
-from quantlab.cloud_access import hash_password, verify_password, owner_authorized, session_cache
+from quantlab.cloud_access import hash_password, verify_password, owner_authorized
 from quantlab.deepseek_client import DeepSeekClient, AIError
 from quantlab.config import api_config
 
@@ -51,3 +51,25 @@ def test_cloud_guest_pages_and_isolated_experiments(monkeypatch):
     second = Store(Path(b.session_state.visitor_directory.name) / "quantlab.sqlite3")
     assert len(first.rows("experiments")) == 1
     assert not second.rows("experiments")
+
+
+def test_cloud_login_logout_and_password_revocation(monkeypatch, tmp_path):
+    monkeypatch.setenv("QUANTLAB_CLOUD", "1")
+    monkeypatch.setattr("quantlab.config.DATA", tmp_path)
+    encoded = hash_password("only-for-ui-test-123")
+    monkeypatch.setattr("quantlab.config.settings", lambda: {"QUANTLAB_PASSWORD_HASH": encoded})
+    app_path = str(Path(__file__).resolve().parent.parent / "cloud_app.py")
+    app = AppTest.from_file(app_path, default_timeout=30).run()
+    next(x for x in app.text_input if x.label == "访问口令").set_value("only-for-ui-test-123")
+    next(x for x in app.button if x.label == "登录").click().run()
+    assert not app.exception
+    assert any(x.value == "站主已登录" for x in app.success)
+    app.session_state["private_result"] = "private"
+    next(x for x in app.button if x.label == "退出站主账号").click().run()
+    assert "private_result" not in app.session_state
+    assert "owner_signature" not in app.session_state
+    app.session_state["owner_signature"] = "revoked-old-hash"
+    app.session_state["private_result"] = "private"
+    app.run()
+    assert not app.exception
+    assert "private_result" not in app.session_state
