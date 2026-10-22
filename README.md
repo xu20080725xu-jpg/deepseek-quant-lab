@@ -1,5 +1,7 @@
 # DeepSeek Quant Lab
 
+**在线体验：[打开 DeepSeek Quant Lab](https://deepseek-quant-lab-xu.streamlit.app/)** · [云端密钥配置](DEPLOY.md)
+
 本地运行的中文 A 股量化研究工作台。当前交付**第一阶段 MVP**：历史行情 → AI 研究 → 人工采用参数 → Python 回测 → 分段验证 → 保存实验 → AI 复盘。无真实资金交易能力。
 
 ## 免费云端部署

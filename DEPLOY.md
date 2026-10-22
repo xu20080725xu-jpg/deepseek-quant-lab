@@ -1,5 +1,9 @@
 # 免费部署
 
+已部署应用：https://deepseek-quant-lab-xu.streamlit.app/
+
+2026-10-22 已在 Community Cloud 的 Python 3.14 环境运行，并验证了历史行情获取、合成示例回测与实验保存。DeepSeek 真实生成仍需站主配置 Key。
+
 源码保存在 GitHub，Python 应用运行在 Streamlit Community Cloud。GitHub Pages 无法直接运行此 Python 服务。
 
 1. 登录 https://share.streamlit.io ，连接 GitHub。
